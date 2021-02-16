@@ -1,0 +1,157 @@
+/*************************************************************************/
+/***************** STILOS
+/*************************************************************************/
+
+html{
+    font-size: 0.8rem
+}
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-color: #e2e2e2;
+    display: flex;
+    min-height: 100vh;
+}
+.header{
+    max-width: 1320px;
+    background: #ffffff;
+    border-radius: 0 0 5px 5px;
+    color: #FF671B;
+    padding: 1em;
+    border: 1px #000;
+}
+.header a {
+    text-decoration: none;
+    color: #FF671B;
+    border-color: #FF671B;
+}
+.log-nav-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    letter-spacing: 8px;
+    font-size: 1.4em;
+    font-weight: bold
+}
+.navigation ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.navigation ul li {
+    display: inline-block;
+}
+.navigation ul li a {
+    transition: all 0.3s linear
+}
+/*#cont-main{
+    min-height: calc(100vh - 52px - 45px)
+}
+*/
+.footer{
+    max-width: 1320px;
+    background: #FF671B;
+    color: #fff;
+    border-radius: 5px 5px 0 0;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 2em
+}
+.footer a {
+    text-decoration: none;
+    color: #fff;
+}
+.title-welcome{
+    text-align: center;
+    font-weight: bold;
+    margin: 2em
+}
+.login{
+    height: 25em;
+    width: 50em;
+    background-color: #ffffff;
+    margin: 0 auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px -6px;
+}
+div.btn-login{
+    text-align: center;
+    position: relative;
+    top: -17%;
+}
+#btn-login{
+    background-color: #ffffff;
+    width: 75%;
+    color: #FF671B;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border: 2px solid #FF671B;
+}
+.cont-all{
+    border: 1px solid #c7c7c7;
+    border-radius: 5px;
+    margin: 2em 0;
+    background: #ffffff;
+    padding: 2em;
+}
+.align-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-add{
+    background: #FF671B;
+    color: #ffffff;
+    font-weight: bold;
+}
+.btn-return{
+    background: darkgray;
+    color: #ffffff;
+    font-weight: bold;
+}
+.tb{
+    border: 1px solid #c7c7c7;
+    border-radius: 5px;
+}
+.lbl-return{
+    display: flex;
+    max-height: 31px;
+    align-items: baseline;
+    margin: 0 0 1em;
+}
+.div-search{
+    display: flex;
+    max-height: 31px;
+    align-items: baseline;
+    margin: 0 0 1em;
+}
+.container-per{
+    background-color: #ffffff;
+    border: none;
+    max-width: 800px;
+    max-height: 800px;
+    margin: 2em auto;
+}
+.a-manage{
+    text-decoration: none;
+}
+.h5-manage{
+    color: #FF671B;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+.p-manage{
+    color: #000000;
+    letter-spacing: 0.5px;
+}
+.d-manage{
+    background-color: #ff671b4f;
+    min-height: 8.5rem;
+}
+.dc-manage{
+    min-height: 310px;
+}
+/*************************************************************************/
+/***************** FIN DE STILOS
+/*************************************************************************/

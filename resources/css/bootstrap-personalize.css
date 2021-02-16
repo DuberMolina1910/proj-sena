@@ -1,0 +1,27 @@
+
+/*************************************************************************/
+/***************** BOOTSTRAP PERSONALIZADO
+/*************************************************************************/
+
+.ml-auto{
+    margin-left: auto;
+}
+.btn-del{
+    color: #dc3545
+}
+/**** PAGINATION ****/
+.page-link {
+    color: #FF671B;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+.page-item.active .page-link{
+    color: #fff;
+    background-color: #FF671B;
+    border-color: #FF671B;
+}
