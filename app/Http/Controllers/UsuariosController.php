@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\fichas;
-use App\Models\perfiles;
-use App\Models\usuarios;
-use App\Models\usuariosXfichas;
-use App\Models\usuariosXperfiles;
+use App\Models\Fichas;
+use App\Models\Perfiles;
+use App\Models\Usuarios;
+use App\Models\UsuariosXFichas;
+use App\Models\UsuariosXPerfiles;
 use Illuminate\Http\Request;
 use Intervention\Image\Image;
 use function GuzzleHttp\Promise\all;
@@ -16,7 +16,7 @@ class UsuariosController extends Controller
     //
     public function index(){
 
-        $usuarios = usuarios
+        $usuarios = Usuarios
             ::join('usuarios_xperfiles', 'usuarios_xperfiles.docUsuarioP', '=', 'usuarios.docUsuario')
             ->join('perfiles', 'perfiles.codPerfil', '=', 'usuarios_xperfiles.codPerfil')
             ->select('usuarios.*','perfiles.*')->get();
@@ -26,9 +26,9 @@ class UsuariosController extends Controller
 
     public function create(){
 
-        $usuarios = usuarios::all();
-        $perfiles = perfiles::all();
-        $fichas = fichas
+        $usuarios = Usuarios::all();
+        $perfiles = Perfiles::all();
+        $fichas = Fichas
             ::join('fichas_xprogramas', 'fichas_xprogramas.numFichaP', '=', 'fichas.numFicha')
             ->join('programas', 'programas.codPrograma', '=', 'fichas_xprogramas.codPrograma')
             ->select('fichas.*', 'programas.*')->get();
@@ -48,7 +48,7 @@ class UsuariosController extends Controller
         $destino = public_path('img/profile');
         $request->fotoPerfil->move($destino, $nombre);
 
-        usuarios::create([
+        Usuarios::create([
             'docUsuario' => request('docUsuario'),
             'nomUsuario' => request('nomUsuario'),
             'apelUsuario' => request('apelUsuario'),
@@ -59,11 +59,11 @@ class UsuariosController extends Controller
             'fotoPerfil' => $nombre,
             'estadoUsuario' => request('estadoUsuario'),
         ]);
-        usuariosXperfiles::create([
+        UsuariosXPerfiles::create([
             'docUsuarioP' => request('docUsuario'),
             'codPerfil' => request('codPerfil')
         ]);
-        usuariosXfichas::create([
+        UsuariosXFichas::create([
             'numFichaU' => request('numFicha'),
             'docUsuarioF' => request('docUsuario')
         ]);
@@ -73,12 +73,12 @@ class UsuariosController extends Controller
 
     public function edit($docUsuario){
 
-        $perfiles = perfiles::all();
-        $fichas = fichas
+        $perfiles = Perfiles::all();
+        $fichas = Fichas
             ::join('fichas_xprogramas', 'fichas_xprogramas.numFichaP', '=', 'fichas.numFicha')
             ->join('programas', 'programas.codPrograma', '=', 'fichas_xprogramas.codPrograma')
             ->select('fichas.*', 'programas.*')->get();
-        $usuarios = usuarios
+        $usuarios = Usuarios
             ::join('usuarios_xperfiles', 'usuarios_xperfiles.docUsuarioP', '=', 'usuarios.docUsuario')
             ->join('perfiles', 'perfiles.codPerfil', '=', 'usuarios_xperfiles.codPerfil')
             ->join('usuarios_xfichas', 'usuarios_xfichas.docUsuarioF', '=', 'usuarios.docUsuario')
@@ -88,8 +88,6 @@ class UsuariosController extends Controller
             ->where('usuarios.docUsuario', '=', $docUsuario)
             ->select('usuarios.*', 'perfiles.*', 'fichas.*', 'programas.*')
             ->first();
-
-        //return $usuarios;
 
         return view('modules.usuarios.edit', compact('usuarios', 'perfiles', 'fichas'));
     }
@@ -108,7 +106,7 @@ class UsuariosController extends Controller
             $destino = public_path('img/profile');
             $request->fotoPerfil->move($destino, $nombre);
 
-            $usuarios = usuarios::where('docUsuario', $docUsuario)->update([
+            $usuarios = Usuarios::where('docUsuario', $docUsuario)->update([
                 'docUsuario' => $request->get('docUsuario'),
                 'nomUsuario' => $request->get('nomUsuario'),
                 'apelUsuario' => $request->get('apelUsuario'),
@@ -119,17 +117,17 @@ class UsuariosController extends Controller
                 'fotoPerfil' => $nombre,
                 'estadoUsuario' => $request->get('estadoUsuario'),
             ]);
-            $usuXper = usuariosXperfiles::where('docUsuarioP', $docUsuario)->update([
+            $usuXper = UsuariosXPerfiles::where('docUsuarioP', $docUsuario)->update([
                 'docUsuarioP' => request('docUsuario'),
                 'codPerfil' => request('codPerfil')
             ]);
-            $usuXfich = usuariosXfichas::where('numFichaU', $request->get('numFicha'))->update([
+            $usuXfich = UsuariosXFichas::where('numFichaU', $request->get('numFicha'))->update([
                 'numFichaU' => request('numFicha'),
                 'docUsuarioF' => request('docUsuario')
             ]);
         }
 
-        $usuarios = usuarios::where('docUsuario', $docUsuario)->update([
+        $usuarios = Usuarios::where('docUsuario', $docUsuario)->update([
             'docUsuario' => $request->get('docUsuario'),
             'nomUsuario' => $request->get('nomUsuario'),
             'apelUsuario' => $request->get('apelUsuario'),
@@ -139,11 +137,11 @@ class UsuariosController extends Controller
             'tipoDocumento' => $request->get('tipoDocumento'),
             'estadoUsuario' => $request->get('estadoUsuario'),
         ]);
-        $usuXper = usuariosXperfiles::where('docUsuarioP', $docUsuario)->update([
+        $usuXper = UsuariosXPerfiles::where('docUsuarioP', $docUsuario)->update([
             'docUsuarioP' => request('docUsuario'),
             'codPerfil' => request('codPerfil')
         ]);
-        $usuXfich = usuariosXfichas::where('numFichaU', $request->get('numFicha'))->update([
+        $usuXfich = UsuariosXFichas::where('numFichaU', $request->get('numFicha'))->update([
             'numFichaU' => request('numFicha'),
             'docUsuarioF' => request('docUsuario')
         ]);
@@ -153,7 +151,7 @@ class UsuariosController extends Controller
 
     public function show($docUsuario){
 
-        $usuarios = usuarios
+        $usuarios = Usuarios
             ::join('usuarios_xperfiles', 'usuarios_xperfiles.docUsuarioP', '=', 'usuarios.docUsuario')
             ->join('perfiles', 'perfiles.codPerfil', '=', 'usuarios_xperfiles.codPerfil')
             ->join('usuarios_xfichas', 'usuarios_xfichas.docUsuarioF', '=', 'usuarios.docUsuario')
@@ -169,7 +167,7 @@ class UsuariosController extends Controller
 
     public function delete($docUsuario){
 
-        $usuarios = usuarios::where('docUsuario', $docUsuario)->delete();
+        $usuarios = Usuarios::where('docUsuario', $docUsuario)->delete();
 
         return redirect()->route('usuarios.index');
     }

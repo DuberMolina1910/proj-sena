@@ -46,21 +46,21 @@ class FichasController extends Controller
 
     public function create(){
 
-        $fichas = fichas::all();
-        $jornadas = jornadas::all();
-        $programas = programas::all();
+        $fichas = Fichas::all();
+        $jornadas = Jornadas::all();
+        $programas = Programas::all();
 
         return view('modules.fichas.create', compact('fichas', 'jornadas', 'programas'));
     }
 
     public function store(Request $request){
 
-        fichas::create([
+        Fichas::create([
             'numFicha' => request('numFicha'),
             'estadoFicha' => request('estadoFicha'),
             'jornadasId' => request('jornadasId')
         ]);
-        fichasXProgramas::create([
+        FichasXProgramas::create([
             'numFichaP' => request('numFicha'),
             'codPrograma' => request('codPrograma')
         ]);
@@ -70,27 +70,27 @@ class FichasController extends Controller
 
     public function edit($numFicha){
 
-        $fichas = fichas
+        $fichas = Fichas
             ::join('jornadas', 'jornadas.idJornada', '=', 'fichas.jornadasId')
             ->join('fichas_xprogramas', 'fichas_xprogramas.numFichaP', '=', 'fichas.numFicha')
             ->join('programas', 'programas.codPrograma', '=', 'fichas_xprogramas.codPrograma')
             ->where('fichas.numFicha', '=', $numFicha)
             ->select('fichas.*','jornadas.descJornada', 'programas.nomPrograma', 'programas.codPrograma')
             ->first();
-        $jornadas = jornadas::all();
-        $programas = programas::all();
+        $jornadas = Jornadas::all();
+        $programas = Programas::all();
 
         return view('modules.fichas.edit', compact('fichas', 'jornadas', 'programas'));
     }
 
     public function update(Request $request, $numFicha){
 
-        $fichas = fichas::where('numFicha', $numFicha)->update([
+        $fichas = Fichas::where('numFicha', $numFicha)->update([
             'numFicha' => $request->get('numFicha'),
             'estadoFicha' => $request->get('estadoFicha'),
             'jornadasId' => $request->get('jornadasId')
         ]);
-        $fi_pro = fichasXProgramas::where('numFichaP', $numFicha)->update([
+        $fi_pro = FichasXProgramas::where('numFichaP', $numFicha)->update([
             'numFichaP' => $request->get('numFicha'),
             'codPrograma' => $request->get('codPrograma')
         ]);
@@ -100,7 +100,7 @@ class FichasController extends Controller
 
     public function show($numFicha){
 
-        $fichas = fichas
+        $fichas = Fichas
             ::join('jornadas', 'jornadas.idJornada', '=', 'fichas.jornadasId')
             ->join('fichas_xprogramas', 'fichas_xprogramas.numFichaP', '=', 'fichas.numFicha')
             ->join('programas', 'programas.codPrograma', '=', 'fichas_xprogramas.codPrograma')
